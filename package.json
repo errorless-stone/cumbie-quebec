@@ -5,5 +5,18 @@
     "express": "^4.18.2",
     "mongodb": "^6.1.0",
     "nodemon": "^3.0.1"
-  }
+  },
+  "name": "lab-papa-486",
+  "description": "[486🚀](https://gist.github.com/barrycumbie/bbf76cb219a3e7579de1607d7e91fceb)",
+  "version": "1.0.0",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "engines": {
+    "node": ">=16.20.1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
 }

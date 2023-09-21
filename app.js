@@ -1,11 +1,18 @@
 const express = require('express')
 const app = express()
 const bodyParser = require('body-parser')
-const port = (process.env.PORT || 8000)
-
-
+const { ObjectId } = require('mongodb')
+const port = (process.env.PORT || 5500)
 const { MongoClient, ServerApiVersion } = require('mongodb');
-const uri = "mongodb+srv://JaidenGarner:<xEZ7cZD23KaIqKTw>@cluster0.whnv01a.mongodb.net/?retryWrites=true&w=majority&appName=AtlasApp";
+const uri = "mongodb+srv://JaidenGarner:xEZ7cZD23KaIqKTw@cluster0.whnv01a.mongodb.net/?retryWrites=true&w=majority&appName=AtlasApp";
+
+
+
+app.set('view engine', 'ejs');
+app.use(bodyParser.urlencoded({ extended: true }));
+
+
+
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
 const client = new MongoClient(uri, {
   serverApi: {
@@ -14,6 +21,7 @@ const client = new MongoClient(uri, {
     deprecationErrors: true,
   }
 });
+
 async function run() {
   try {
     // Connect the client to the server	(optional starting in v4.7)
@@ -26,14 +34,42 @@ async function run() {
     await client.close();
   }
 }
-run().catch(console.dir);
-app.set('view engine', 'ejs');
-app.use(bodyParser.urlencoded({ extended: true }));
+//run().catch(console.dir);
 
-4
+async function cxnDB(){
+
+  try{
+    client.connect; 
+    const collection = client.db("jaidens-cool-papa-database").collection("dev-profiles");
+    // const collection = client.db("papa").collection("dev-profiles");
+    const result = await collection.find().toArray();
+    //const result = await collection.findOne(); 
+    console.log("cxnDB result: ", result);
+    return result; 
+  }
+  catch(e){
+      console.log(e)
+  }
+  finally{
+    client.close; 
+  }
+}
+
+
+app.get('/', async (req, res) => {
+
+  let result = await cxnDB().catch(console.error); 
+
+  // console.log("get/: ", result);
+
+  res.send("here for a second: " + result[0])
+  //res.render('index', {  peopleData : result })
+})
+
+
 let myVariableServer = 'soft coded server data';
 
-app.get('/view', function (req, res) {
+app.get('/barry', function (req, res) {
   res.render('index', 
   {
     'myVariableClient' : myVariableServer 
@@ -57,13 +93,13 @@ app.post('/postClientData', function (req, res) {
 })
 
 
-app.get('/', function (req, res) {
-  res.send('<h1>Hello World From Express & a PaaS/Render</h1>')
-})
+// app.get('/', function (req, res) {
+//   res.send('<h1>Hello World From Express & a PaaS/Render</h1>')
+// })
 
-app.get('/index', function (req, res) {
-  res.sendFile(__dirname + '/index.html');
-})
+// app.get('/whatever', function (req, res) {
+//   res.sendFile(__dirname + '/index.html');
+// })
 
 
 
