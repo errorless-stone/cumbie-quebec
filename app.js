@@ -40,7 +40,7 @@ async function cxnDB(){
 
   try{
     client.connect; 
-    const collection = client.db("jaidens-cool-papa-database").collection("dev-profiles");
+    const collection = client.db("jaidens-cool-papa-database").collection("jaidens-cool-papa-collection");
     // const collection = client.db("papa").collection("dev-profiles");
     const result = await collection.find().toArray();
     //const result = await collection.findOne(); 
@@ -62,7 +62,7 @@ app.get('/', async (req, res) => {
 
   // console.log("get/: ", result);
 
-  res.send("here for a second: " + result[0])
+  res.send("here for a second: " + result[0].name)
   //res.render('index', {  peopleData : result })
 })
 
