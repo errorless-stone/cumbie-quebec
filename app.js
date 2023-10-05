@@ -37,7 +37,7 @@ async function cxnDB(){
 
   try{
     await client.connect().then(
-      client.db("barrys-cool-papa-database").collection("dev-profiles")
+      client.db("drews-cool-database").collection("dev-profiles")
       );       
   }
   catch(e){
@@ -52,7 +52,7 @@ async function cxnDB(){
 app.get('/', async (req, res) => {
 
  client.connect;
-  let mongoResult = await client.db("barrys-cool-papa-database").collection("dev-profiles").find().toArray();
+  let mongoResult = await client.db("drews-cool-database").collection("dev-profiles").find().toArray();
 // console.log("get/: ", result);
 console.log(mongoResult);
   //'res.send("here for a second: " + result[0].name)
@@ -68,7 +68,7 @@ app.post('/updateProfile', async (req, res) => {
     console.log("user Name: ", req.body.devName)
     
     client.connect; 
-    const collection = client.db("barrys-cool-papa-database").collection("dev-profiles");
+    const collection = client.db("drews-cool-database").collection("dev-profiles");
   
     // put it into mongo
     let result = await collection.findOneAndUpdate( 
@@ -95,7 +95,7 @@ app.post('/insertProfile', async (req, res) => {
     console.log("user Name: ", req.body.devName)
     
     client.connect; 
-    const collection = client.db("barrys-cool-papa-database").collection("dev-profiles");
+    const collection = client.db("drews-cool-database").collection("dev-profiles");
   
     // put it into mongo
     let result = await collection.insertOne( 
@@ -121,7 +121,7 @@ app.post('/deleteProfile', async (req, res) => {
     console.log("user Name: ", req.body.devName)
     
     client.connect; 
-    const collection = client.db("barrys-cool-papa-database").collection("dev-profiles");
+    const collection = client.db("drews-cool-database").collection("dev-profiles");
   
     // put it into mongo
     let result = await collection.findOneAndDelete( 
