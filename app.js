@@ -60,7 +60,7 @@ console.log(mongoResult);
     profileData : mongoResult })
 })
 
-app.post('/updateProfile', async (req, res) => {
+app.post('/updateName', async (req, res) => {
 
   try {
     //get the new dev name
@@ -87,19 +87,20 @@ app.post('/updateProfile', async (req, res) => {
   }
 })
 
-app.post('/insertProfile', async (req, res) => {
+app.post('/updateGithub', async (req, res) => {
 
   try {
     //get the new dev name
     console.log("body: ", req.body)
-    console.log("user Name: ", req.body.devName)
+    console.log("user Name: ", req.body.devHub)
     
     client.connect; 
     const collection = client.db("drews-cool-database").collection("dev-profiles");
   
     // put it into mongo
-    let result = await collection.insertOne( 
-      { name: req.body.newDevName })
+    let result = await collection.findOneAndUpdate( 
+      { _id: new ObjectId( req.body.devId ) },
+      {$set: {github: req.body.devHub }})
       .then(result => {
         console.log(result); 
         res.redirect('/');
@@ -113,12 +114,40 @@ app.post('/insertProfile', async (req, res) => {
   }
 })
 
+app.post('/insertProfile', async (req, res) => {
+
+  try {
+    //get the new dev name
+    console.log("body: ", req.body)
+    console.log("user Name: ", req.body.devName)
+    console.log("Github: ", req.body.devHub)
+    
+    client.connect; 
+    const collection = client.db("drews-cool-database").collection("dev-profiles");
+  
+    // put it into mongo
+    let result = await collection.insertOne( 
+      { name: req.body.newDevName, github: req.body.newDevHub })
+      .then(result => {
+        console.log(result); 
+        res.redirect('/');
+      })
+      .catch(error => console.error(error))
+      
+
+  }
+  finally{
+    //client.close()
+  }
+})
+
 app.post('/deleteProfile', async (req, res) => {
 
   try {
     //get the new dev name
     console.log("body: ", req.body)
     console.log("user Name: ", req.body.devName)
+    console.log("github: ",req.body.devHub)
     
     client.connect; 
     const collection = client.db("drews-cool-database").collection("dev-profiles");
